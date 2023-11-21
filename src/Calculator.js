@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
-import toast from "react-hot-toast";
+import React, { useState } from "react";
+import Fraction from "fraction.js";
 
 function Calculator() {
   const [result, setResult] = useState("");
+  const [isFraction, setIsFraction] = useState(false);
 
   const handleClick = (e) => {
     setResult(result.concat(e.target.name));
-  };
-  const handleToast = () => {
-    toast.success("You are welcome");
   };
 
   const clear = () => {
@@ -17,7 +15,12 @@ function Calculator() {
 
   const calculate = () => {
     try {
-      setResult(eval(result).toString());
+      const calculatedResult = eval(result);
+      setResult(
+        isFraction
+          ? new Fraction(calculatedResult).toFraction(true)
+          : calculatedResult.toString()
+      );
     } catch (err) {
       setResult("Error");
     }
@@ -27,30 +30,16 @@ function Calculator() {
     setResult(result.slice(0, -1));
   };
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if ((e.key >= 0 && e.key <= 9) || e.key === ".") {
-        setResult(result.concat(e.key));
-      } else if (
-        e.key === "+" ||
-        e.key === "-" ||
-        e.key === "*" ||
-        e.key === "/"
-      ) {
-        setResult(result.concat(e.key));
-      } else if (e.key === "Enter") {
-        calculate();
-      } else if (e.key === "Backspace") {
-        deleteLastDigit();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [result]);
+  const toggleFractionDecimal = () => {
+    setIsFraction(!isFraction);
+    if (result) {
+      setResult(
+        isFraction
+          ? parseFloat(eval(result)).toString()
+          : new Fraction(eval(result)).toFraction(true)
+      );
+    }
+  };
 
   return (
     <div className="calculator flex flex-col items-center justify-center h-screen bg-gray-200">
@@ -73,13 +62,13 @@ function Calculator() {
           className="bg-red-500 text-white p-3 rounded"
         >
           Delete
-        </button>{" "}
+        </button>
         <button
-          // name="7"
-          onClick={handleToast}
-          className="bg-violet-500 text-white p-3 rounded"
+          onClick={toggleFractionDecimal}
+          id="toggleFractionDecimal"
+          className="bg-red-500 text-white p-3 rounded"
         >
-          Thanks
+          {isFraction ? "Decimal" : "Fraction"}
         </button>
         <button
           name="/"
@@ -89,18 +78,18 @@ function Calculator() {
           /
         </button>
         <button
-          name="8"
-          onClick={handleClick}
-          className="bg-blue-500 text-white p-3 rounded"
-        >
-          8
-        </button>
-        <button
           name="7"
           onClick={handleClick}
           className="bg-blue-500 text-white p-3 rounded"
         >
           7
+        </button>
+        <button
+          name="8"
+          onClick={handleClick}
+          className="bg-blue-500 text-white p-3 rounded"
+        >
+          8
         </button>
         <button
           name="9"
