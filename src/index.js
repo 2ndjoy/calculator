@@ -4,11 +4,15 @@ import "./index.css";
 // import App from "./Calculator";
 import reportWebVitals from "./reportWebVitals";
 import Calculator from "./Calculator";
+import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Calculator />
+    <div>
+      <Toaster />
+    </div>
   </React.StrictMode>
 );
 

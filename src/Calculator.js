@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 function Calculator() {
   const [result, setResult] = useState("");
 
   const handleClick = (e) => {
     setResult(result.concat(e.target.name));
+  };
+  const handleToast = () => {
+    toast.success("You are welcome");
   };
 
   const clear = () => {
@@ -69,6 +73,13 @@ function Calculator() {
           className="bg-red-500 text-white p-3 rounded"
         >
           Delete
+        </button>{" "}
+        <button
+          // name="7"
+          onClick={handleToast}
+          className="bg-violet-500 text-white p-3 rounded"
+        >
+          Thanks
         </button>
         <button
           name="/"
@@ -78,18 +89,18 @@ function Calculator() {
           /
         </button>
         <button
-          name="7"
-          onClick={handleClick}
-          className="bg-blue-500 text-white p-3 rounded"
-        >
-          7
-        </button>
-        <button
           name="8"
           onClick={handleClick}
           className="bg-blue-500 text-white p-3 rounded"
         >
           8
+        </button>
+        <button
+          name="7"
+          onClick={handleClick}
+          className="bg-blue-500 text-white p-3 rounded"
+        >
+          7
         </button>
         <button
           name="9"
