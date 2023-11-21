@@ -19,10 +19,6 @@ function Calculator() {
     }
   };
 
-  const deleteLastDigit = () => {
-    setResult(result.slice(0, -1));
-  };
-
   return (
     <div className="calculator flex flex-col items-center justify-center h-screen bg-gray-200">
       <input
@@ -34,16 +30,23 @@ function Calculator() {
         <button
           onClick={clear}
           id="clear"
-          className="bg-red-500 text-white p-3 rounded"
+          className="col-span-2 bg-red-500 text-white p-3 rounded"
         >
           Clear
         </button>
-        <button
-          onClick={deleteLastDigit}
-          id="delete"
-          className="bg-red-500 text-white p-3 rounded"
+        {/* <button
+          name="/"
+          onClick={handleClick}
+          className="bg-green-500 text-white p-3 rounded"
         >
-          Delete
+          /
+        </button> */}
+        <button
+          // name="7"
+          // onClick={handleClick}
+          className="bg-blue-500 text-white p-3 rounded"
+        >
+          Nothing
         </button>
         <button
           name="/"
@@ -52,6 +55,7 @@ function Calculator() {
         >
           /
         </button>
+
         <button
           name="7"
           onClick={handleClick}
@@ -139,7 +143,7 @@ function Calculator() {
         <button
           name="0"
           onClick={handleClick}
-          className="bg-blue-500 text-white p-3 rounded"
+          className="col-span-2 bg-blue-500 text-white p-3 rounded"
         >
           0
         </button>
