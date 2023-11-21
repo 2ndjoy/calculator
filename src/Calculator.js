@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Fraction from "fraction.js";
 
 function Calculator() {
@@ -40,6 +40,31 @@ function Calculator() {
       );
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.key >= 0 && e.key <= 9) || e.key === ".") {
+        setResult(result.concat(e.key));
+      } else if (
+        e.key === "+" ||
+        e.key === "-" ||
+        e.key === "*" ||
+        e.key === "/"
+      ) {
+        setResult(result.concat(e.key));
+      } else if (e.key === "Enter") {
+        calculate();
+      } else if (e.key === "Backspace") {
+        deleteLastDigit();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [result]);
 
   return (
     <div className="calculator flex flex-col items-center justify-center h-screen bg-gray-200">
