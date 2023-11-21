@@ -46,19 +46,12 @@ function Calculator() {
           Delete
         </button>
         <button
-          name="7"
-          onClick={handleClick}
-          className="bg-blue-500 text-white p-3 rounded"
-        >
-          7
-        </button>{" "}
-        <button
           name="/"
           onClick={handleClick}
           className="bg-green-500 text-white p-3 rounded"
         >
           /
-        </button>{" "}
+        </button>
         <button
           name="7"
           onClick={handleClick}
