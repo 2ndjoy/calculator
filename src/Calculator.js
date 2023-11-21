@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Calculator() {
   const [result, setResult] = useState("");
@@ -19,6 +19,35 @@ function Calculator() {
     }
   };
 
+  const deleteLastDigit = () => {
+    setResult(result.slice(0, -1));
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.key >= 0 && e.key <= 9) || e.key === ".") {
+        setResult(result.concat(e.key));
+      } else if (
+        e.key === "+" ||
+        e.key === "-" ||
+        e.key === "*" ||
+        e.key === "/"
+      ) {
+        setResult(result.concat(e.key));
+      } else if (e.key === "Enter") {
+        calculate();
+      } else if (e.key === "Backspace") {
+        deleteLastDigit();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [result]);
+
   return (
     <div className="calculator flex flex-col items-center justify-center h-screen bg-gray-200">
       <input
@@ -30,23 +59,16 @@ function Calculator() {
         <button
           onClick={clear}
           id="clear"
-          className="col-span-2 bg-red-500 text-white p-3 rounded"
+          className="bg-red-500 text-white p-3 rounded"
         >
           Clear
         </button>
-        {/* <button
-          name="/"
-          onClick={handleClick}
-          className="bg-green-500 text-white p-3 rounded"
-        >
-          /
-        </button> */}
         <button
-          // name="7"
-          // onClick={handleClick}
-          className="bg-blue-500 text-white p-3 rounded"
+          onClick={deleteLastDigit}
+          id="delete"
+          className="bg-red-500 text-white p-3 rounded"
         >
-          Nothing
+          Delete
         </button>
         <button
           name="/"
@@ -55,7 +77,6 @@ function Calculator() {
         >
           /
         </button>
-
         <button
           name="7"
           onClick={handleClick}
@@ -143,7 +164,7 @@ function Calculator() {
         <button
           name="0"
           onClick={handleClick}
-          className="col-span-2 bg-blue-500 text-white p-3 rounded"
+          className="bg-blue-500 text-white p-3 rounded"
         >
           0
         </button>
